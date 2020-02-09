@@ -1,0 +1,6 @@
+set shell := ["powershell.exe", "-c"]
+
+build:
+    cargo build
+    rm ..\plugins\plug_gimp.dll
+    cp target\debug\plug_gimp.dll ..\plugins\
