@@ -18,3 +18,4 @@ reqwest = { version = "0.10", features = ["json"] }
 tokio = { version = "0.2", features = ["full"] }
 prettytable-rs = "0.8.0"
 libloading = "0.5.2"
+walkdir = "2.3.1"

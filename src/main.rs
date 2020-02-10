@@ -1,11 +1,11 @@
-use log::{error, info};
+use log::error;
 use prettytable::{cell, color, format::consts, row, Attr, Cell, Row, Table};
+use scarper::plugins::PluginManager;
 use serde::Deserialize;
 use std;
 use std::fs::File;
 use std::io::prelude::*;
-
-use scarper::plugins::PluginManager;
+use walkdir::{WalkDir, DirEntry};
 
 #[derive(Deserialize, Default, Debug)]
 struct Config {
@@ -42,6 +42,14 @@ fn parse(path: &str) -> Config {
     }
 }
 
+fn is_not_hidden(entry: &DirEntry) -> bool {
+    entry
+        .file_name()
+        .to_str()
+        .map(|s| entry.depth() == 0 || !s.starts_with("."))
+        .unwrap_or(false)
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     pretty_env_logger::init();
@@ -58,17 +66,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut pm = PluginManager::new();
 
-    match pm.load_plugin("plugins\\plug_gimp.dll") {
-        Ok(()) => info!("Plugin loaded"),
-        Err(err) => info!("Plugin failed to load: {:?}", err),
+    for entry in WalkDir::new("plugins")
+        .max_depth(2)
+        .into_iter()
+        .filter_entry(|e| is_not_hidden(e))
+        .filter_map(|e| e.ok())
+        .filter(|e| !e.file_type().is_dir())
+    {
+        let filename = entry.path().to_str().unwrap();
+        pm.load_plugin(filename).unwrap();
     }
 
     for package in config.packages {
-        let location = package.location.unwrap_or("unknown".to_string());
+        let location = package.location.unwrap_or_else(|| "unknown".to_string());
         let name = package.name.unwrap();
         let version = package.version;
 
-        let mut loc = location.split(":");
+        let mut loc = location.split(':');
         let location_type = loc.next();
         let location_uri = loc.next();
 
@@ -95,13 +109,27 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
             }
             Some("package") => {
-                unimplemented!();
+                let current_version = pm.get_package_version(location_uri.unwrap());
+                if current_version == version.unwrap().as_str() {
+                    table.add_row(Row::new(vec![
+                        Cell::new(name.as_str()).with_style(Attr::Bold),
+                        Cell::new("up-to date").with_style(Attr::ForegroundColor(color::GREEN)),
+                    ]));
+                } else {
+                    table.add_row(Row::new(vec![
+                        Cell::new(name.as_str()).with_style(Attr::Bold),
+                        Cell::new(current_version)
+                            .with_style(Attr::ForegroundColor(color::RED)),
+                    ]));
+                }
             }
             Some("http") | Some("https") => {
                 unimplemented!();
             }
             Some(_) | None => {
-                error!("Invalid location please verify again the input location on the toml config");
+                error!(
+                    "Invalid location please verify again the input location on the toml config"
+                );
             }
         }
     }

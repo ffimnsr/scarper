@@ -18,10 +18,10 @@ name = "cutter"
 location = "github:radareorg/cutter"
 version = "v1.10.1"
 
-# [[packages]]
-# name = "gimp"
-# location = "package:gimp"
-# version = "2.10.14"
+[[packages]]
+name = "gimp"
+location = "package:gimp"
+version = "2.10.14"
 
 # [[packages]]
 # name = "krita"

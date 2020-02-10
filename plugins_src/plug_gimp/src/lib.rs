@@ -8,19 +8,20 @@ pub struct PlugGimp;
 
 impl Plugin for PlugGimp {
     fn name(&self) -> &'static str {
-        "PlugGimp"
+        "plug_gimp"
     }
 
     fn on_plugin_load(&self) {
-        info!("PlugGimp loaded");
+        info!("plug_gimp loaded");
     }
 
     fn on_plugin_unload(&self) {
-        info!("PlugGimp unloaded");
+        info!("plug_gimp unloaded");
     }
 
-    fn get_package_version(&self) {
-        info!("PlugGimp Get Version");
+    fn get_package_version(&self) -> &'static str {
+        info!("plug_gimp Get Version");
+        "sample"
     }
 }
 
