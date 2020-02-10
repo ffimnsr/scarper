@@ -25,7 +25,8 @@ Here is a sample command line usage of `scarper`.
 $ scarper
 ```
 
-Create a 
+Create a `scarper_watch.toml` and put your package to be version check.
+See [scarper_watch.toml](scarper_watch.toml) for an example.
 
 ## Installation
 
