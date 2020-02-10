@@ -9,7 +9,7 @@ categories = ["command-line-utilities", "development-tools", "embedded"]
 homepage = "https://github.com/ffimnsr/scarper"
 repository = "https://github.com/ffimnsr/scarper"
 license = "MIT OR Apache-2.0"
-keywords = ["cli", "version checker", "pluggable"]
+keywords = ["cli", "version", "checker", "pluggable"]
 exclude = [".gitignore"]
 
 [lib]
