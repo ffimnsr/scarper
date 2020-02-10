@@ -57,7 +57,7 @@ impl PluginManager {
             let plugin = Box::from_raw(boxed_raw);
 
             debug!("Loaded plugins: {}", plugin.name());
-            
+
             plugin.on_plugin_load();
             self.plugins.push(plugin);
         }

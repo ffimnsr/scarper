@@ -5,7 +5,7 @@ use serde::Deserialize;
 use std;
 use std::fs::File;
 use std::io::prelude::*;
-use walkdir::{WalkDir, DirEntry};
+use walkdir::{DirEntry, WalkDir};
 
 #[derive(Deserialize, Default, Debug)]
 struct Config {
@@ -98,7 +98,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 if json.tag_name == version {
                     table.add_row(Row::new(vec![
                         Cell::new(name.as_str()).with_style(Attr::Bold),
-                        Cell::new("up-to date").with_style(Attr::ForegroundColor(color::GREEN)),
+                        Cell::new("up-to date")
+                            .with_style(Attr::ForegroundColor(color::GREEN)),
                     ]));
                 } else {
                     table.add_row(Row::new(vec![
@@ -113,7 +114,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 if current_version == version.unwrap().as_str() {
                     table.add_row(Row::new(vec![
                         Cell::new(name.as_str()).with_style(Attr::Bold),
-                        Cell::new("up-to date").with_style(Attr::ForegroundColor(color::GREEN)),
+                        Cell::new("up-to date")
+                            .with_style(Attr::ForegroundColor(color::GREEN)),
                     ]));
                 } else {
                     table.add_row(Row::new(vec![
