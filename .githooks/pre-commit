@@ -2,4 +2,4 @@
 set -e
 
 echo "Linting files..."
-cargo clippy
+cargo clippy -- -D warnings
