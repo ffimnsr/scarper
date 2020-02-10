@@ -21,7 +21,7 @@ impl Plugin for PlugGimp {
 
     fn get_package_version(&self) -> &'static str {
         info!("plug_gimp Get Version");
-        "sample"
+        "2.10.14"
     }
 }
 

@@ -54,7 +54,7 @@ fn is_not_hidden(entry: &DirEntry) -> bool {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     pretty_env_logger::init();
 
-    let config = parse("ScarperWatch.toml");
+    let config = parse("scarper_watch.toml");
 
     let client = reqwest::Client::builder()
         .user_agent("scarper/0.1")

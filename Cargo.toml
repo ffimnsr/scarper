@@ -1,8 +1,16 @@
 [package]
 name = "scarper"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["ffimnsr <ffimnsr@gmail.com>"]
 edition = "2018"
+readme = "README.md"
+description = "A pluggable package / executable version checker for the command line."
+categories = ["command-line-utilities", "development-tools", "embedded"]
+homepage = "https://github.com/ffimnsr/scarper"
+repository = "https://github.com/ffimnsr/scarper"
+license = "MIT OR Apache-2.0"
+keywords = ["cli", "version checker", "pluggable"]
+exclude = [".gitignore"]
 
 [lib]
 name = "scarper"
